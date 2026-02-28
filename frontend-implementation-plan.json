@@ -1,0 +1,250 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Cricket Gods – Frontend Implementation Plan",
+  "requirements": [
+    {
+      "id": "REQ-3",
+      "summary": "Build multi-match management home screen listing all matches with status, format badge, score summary, and navigation to create/demo matches",
+      "acceptanceCriteria": [
+        "All matches are fetched from the backend and displayed in a list/card grid.",
+        "Each card shows both team names, format, status badge, and current score if live.",
+        "Clicking a match navigates to the match detail/scoring view.",
+        "Load Demo Match calls getSampleDemoMatch and navigates directly to that match.",
+        "New Match opens a creation form."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/MatchListPage.tsx",
+          "operation": "create",
+          "description": "Create the home page component that fetches and displays all matches using listMatches backend method. Display match cards with team names, format badge (T20/ODI/Test), status badge (scheduled/inProgress/completed), and current score summary. Include 'New Match' button navigating to /match/new and 'Load Demo Match' button that calls getSampleDemoMatch and navigates to the demo match detail view. Use shadcn/ui Card components for match display."
+        },
+        {
+          "path": "frontend/src/components/MatchCard.tsx",
+          "operation": "create",
+          "description": "Create a reusable match card component accepting a Match object as prop. Display team names, format badge with appropriate styling (green for T20, blue for ODI, gold for Test), status indicator, and current score (runs/wickets) if match is in progress. Make the entire card clickable to navigate to the match detail page. Apply cricket-themed styling with dark background and accent colors."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire MatchListPage as the root route ('/') in the router. Add routes for /match/new (creation form), /match/:id (match detail/scoring view), and /match/:id/result (match result screen). Ensure navigation structure supports these paths."
+        }
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "summary": "Build match creation form with team names, format selector, overs limit (auto-filled by format), and optional title that calls createMatch and navigates to new match",
+      "acceptanceCriteria": [
+        "Format selector auto-fills overs limit; Test format disables the overs field.",
+        "Validation prevents submission with empty team names.",
+        "On success, user is taken to the match scoring view."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/CreateMatchPage.tsx",
+          "operation": "create",
+          "description": "Create form page with fields for Team 1 name, Team 2 name, match format (dropdown: T20/ODI/Test), overs limit (auto-populated: 20 for T20, 50 for ODI, disabled for Test), and optional match title. Use shadcn/ui Form, Input, Select components. On format change, update overs limit automatically. Validate team names are non-empty before submission. On submit, call createMatch backend method with format enum value, then navigate to /match/:id where :id is the returned match ID. Apply cricket-themed styling."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "Build live scoring interface for active innings with current score display, striker/non-striker stats, bowler details, ball input controls (0-6, Wide, No Ball, Wicket), and wicket dismissal sub-form",
+      "acceptanceCriteria": [
+        "Each ball input calls addDelivery on the backend.",
+        "Score, overs, and run rate update immediately after each delivery.",
+        "Wide and No Ball add 1 run to extras and do not count as a legal delivery.",
+        "After a wicket, user is prompted to enter the next batsman before continuing.",
+        "When innings ends (all out or overs complete), a prompt appears to start the next innings or view final result."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/MatchDetailPage.tsx",
+          "operation": "create",
+          "description": "Create the main match detail page that fetches match data using getMatch backend method. Display current innings score prominently (runs/wickets/overs), show striker and non-striker with live stats, current bowler with over details. Include ball input button grid for 0, 1, 2, 3, 4, 6, Wide, No Ball, Wicket. Each button calls addDelivery with appropriate parameters. For Wicket button, open a dialog/modal to select dismissal type and next batsman (from team roster). Refresh match data after each delivery. When innings completes, show prompt to start next innings via startInnings or navigate to result screen. Include tabs/sections for batting scorecard, bowling scorecard, commentary, and fall of wickets. Use shadcn/ui Button, Dialog, Tabs components."
+        },
+        {
+          "path": "frontend/src/components/LiveScorePanel.tsx",
+          "operation": "create",
+          "description": "Create component displaying current innings total (runs/wickets), overs bowled, current run rate (runs/overs to 2 decimals), and for 2nd innings onward: target, runs needed, required run rate ((runs needed)/(overs remaining) to 2 decimals). Accept current innings data as props. Apply prominent cricket-themed styling with large text for score and contrasting colors for chase details."
+        },
+        {
+          "path": "frontend/src/components/WicketDialog.tsx",
+          "operation": "create",
+          "description": "Create dialog component for wicket input. Display dismissal type selector (caught, bowled, lbw, run out, stumped, etc.) and batsman selector dropdown populated from team roster (exclude already-out players). On confirm, return selected dismissal info and next batsman name to parent component. Use shadcn/ui Dialog and Select components."
+        },
+        {
+          "path": "frontend/src/components/BallInputControls.tsx",
+          "operation": "create",
+          "description": "Create ball input control panel with buttons for runs (0-6), Wide, No Ball, and Wicket. Each button triggers callback to parent with ball details. Style buttons prominently with cricket-themed colors (runs in green shades, extras in amber, wicket in red). Use shadcn/ui Button component with appropriate variants."
+        }
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "summary": "Build scoreboard display panel showing current innings total, overs, run rate, and (for chasing innings) target, runs needed, required run rate",
+      "acceptanceCriteria": [
+        "Run rate = total runs / overs bowled, displayed to 2 decimal places.",
+        "Required run rate = runs needed / overs remaining, shown only in 2nd innings and beyond.",
+        "Target is clearly displayed when chasing.",
+        "All values update in real-time after each delivery."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/LiveScorePanel.tsx",
+          "operation": "modify",
+          "description": "Enhance LiveScorePanel to calculate and display run rate (totalRuns / oversBowled to 2 decimals). For 2nd innings and beyond, calculate target from previous innings total + 1, display runs needed (target - current runs), and required run rate ((runs needed) / overs remaining to 2 decimals). Conditionally render chase metrics only when innings number > 1. Ensure all calculations update reactively when props change."
+        }
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "summary": "Build batting scorecard tab showing table of all batsmen with dismissal info, runs, balls, 4s, 6s, strike rate, and not-out highlighting",
+      "acceptanceCriteria": [
+        "Strike rate = (runs / balls) × 100, shown to 2 decimal places.",
+        "Currently batting players are marked with an asterisk or highlight.",
+        "Dismissed players show dismissal type (caught, bowled, lbw, run out, etc.).",
+        "Extras row and total row are shown at the bottom."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/BattingScorecard.tsx",
+          "operation": "create",
+          "description": "Create batting scorecard table component displaying all batting entries from current innings. Columns: batsman name, dismissal info, runs, balls faced, 4s, 6s, strike rate ((runs/balls)*100 to 2 decimals). Highlight not-out batsmen (green background or asterisk). Show dismissal text for out players. Add extras breakdown row (wides, no-balls, byes, leg-byes from innings.extras) and total row at bottom. Use shadcn/ui Table component with cricket-themed styling."
+        },
+        {
+          "path": "frontend/src/pages/MatchDetailPage.tsx",
+          "operation": "modify",
+          "description": "Add BattingScorecard component to a tab within MatchDetailPage. Pass current innings batting entries and extras data as props. Ensure tab is labeled 'Batting' and is accessible from main match view."
+        }
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "summary": "Build bowling scorecard tab showing table of all bowlers with overs, maidens, runs, wickets, and economy rate",
+      "acceptanceCriteria": [
+        "Economy = runs conceded / overs bowled, shown to 2 decimal places.",
+        "The current bowler is highlighted.",
+        "Overs are displayed in cricket notation (e.g., 3.4 = 3 overs 4 balls)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/BowlingScorecard.tsx",
+          "operation": "create",
+          "description": "Create bowling scorecard table component displaying all bowling entries from current innings. Columns: bowler name, overs (convert bigint overs to cricket notation X.Y where Y = balls), maidens, runs conceded, wickets, economy rate (runsConceded/overs to 2 decimals). Highlight current bowler (determined by last delivery). Use shadcn/ui Table component with cricket-themed styling."
+        },
+        {
+          "path": "frontend/src/pages/MatchDetailPage.tsx",
+          "operation": "modify",
+          "description": "Add BowlingScorecard component to a tab within MatchDetailPage. Pass current innings bowling entries and current bowler identifier as props. Ensure tab is labeled 'Bowling' and is accessible from main match view."
+        }
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "summary": "Build ball-by-ball commentary log showing deliveries grouped by over with over-ball number, runs, extras, wicket flag, and commentary text",
+      "acceptanceCriteria": [
+        "Deliveries are grouped under collapsible over headers (e.g., 'Over 3').",
+        "The most recent over is expanded by default.",
+        "Wicket deliveries are highlighted in a distinct color.",
+        "Wide and no-ball deliveries are clearly labeled."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/CommentaryLog.tsx",
+          "operation": "create",
+          "description": "Create commentary log component displaying ball-by-ball deliveries grouped by over number. Each over is a collapsible section (use shadcn/ui Collapsible or Accordion). Within each over, list deliveries showing over.ball notation, runs scored, extras type (if any), wicket indicator, and commentary text. Highlight wicket balls in red/distinct color. Label wide and no-ball clearly. Default to expanding the most recent over. Apply cricket-themed styling."
+        },
+        {
+          "path": "frontend/src/pages/MatchDetailPage.tsx",
+          "operation": "modify",
+          "description": "Add CommentaryLog component to a tab within MatchDetailPage. Pass current innings deliveries array as props. Ensure tab is labeled 'Commentary' and is accessible from main match view."
+        }
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "summary": "Build fall of wickets tracker showing wicket number, score at fall, over at fall, and dismissed batsman name",
+      "acceptanceCriteria": [
+        "Displayed in chronological order.",
+        "Shows all wickets for the current innings.",
+        "Updates in real-time as wickets fall."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/FallOfWickets.tsx",
+          "operation": "create",
+          "description": "Create fall of wickets component displaying a list of wickets in chronological order. For each wicket, show wicket number, total score at the time, over at which it fell, and dismissed batsman name. Derive this data from innings batting entries where notOut is false, correlating with delivery records. Use shadcn/ui Table or list component with cricket-themed styling."
+        },
+        {
+          "path": "frontend/src/pages/MatchDetailPage.tsx",
+          "operation": "modify",
+          "description": "Add FallOfWickets component to a tab or section within MatchDetailPage. Pass current innings batting and delivery data as props to compute fall of wickets. Ensure it is accessible from main match view."
+        }
+      ]
+    },
+    {
+      "id": "REQ-11",
+      "summary": "Build match result screen showing winning team, margin of victory, player of match placeholder, and back button",
+      "acceptanceCriteria": [
+        "Result is fetched from the backend after concludeMatch is called.",
+        "Handles draw and tie results for Test matches.",
+        "Match is marked as 'Completed' in the match list after the result is set."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/MatchResultPage.tsx",
+          "operation": "create",
+          "description": "Create match result page that fetches match data using getMatch and displays match.result string prominently (e.g., 'Team A won by 34 runs', 'Match drawn', 'Match tied'). Include player of the match placeholder section. Provide 'Back to Matches' button navigating to root ('/') path. Apply celebratory cricket-themed styling with gold accents."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Add route for /match/:id/result mapped to MatchResultPage. Ensure this route is accessible from MatchDetailPage when match status is 'completed'."
+        }
+      ]
+    },
+    {
+      "id": "REQ-12",
+      "summary": "Apply bold cricket-themed visual design: dark stadium background, green and gold accents, cricket typography, card-based layouts, clear hierarchy, and responsive layout for desktop and mobile",
+      "acceptanceCriteria": [
+        "A consistent color palette (dark background, green and gold accents) is applied globally via Tailwind.",
+        "All scorecard tables are readable with sufficient contrast.",
+        "Navigation between match list, live scoring, batting scorecard, bowling scorecard, commentary, and fall of wickets is intuitive (tabs or sidebar).",
+        "Layout is usable on mobile screen widths (min 375px)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Define global cricket-themed styles: set dark stadium-inspired background color (very dark gray/black), apply default text color (off-white), and ensure high contrast. Add CSS custom properties for primary accent (green), secondary accent (gold), and danger (red for wickets). Set base font to a bold, modern sans-serif. Ensure responsive typography scaling."
+        },
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Extend Tailwind theme with cricket color palette: add custom colors for 'stadium-dark' (background), 'cricket-green' (primary accent), 'cricket-gold' (secondary accent), 'wicket-red' (danger). Configure responsive breakpoints ensuring mobile support from 375px. Add custom spacing and border-radius values for card-based layouts."
+        },
+        {
+          "path": "frontend/src/components/Layout.tsx",
+          "operation": "create",
+          "description": "Create main layout component wrapping all pages. Apply stadium-dark background globally. Include header with Cricket Gods branding (reference generated logo at frontend/public/assets/generated/cricket-gods-logo.dim_256x256.png) and navigation. Use shadcn/ui components for consistent structure. Ensure responsive layout with mobile-friendly navigation (collapsible menu if needed)."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wrap all routes with Layout component to ensure consistent branding, navigation, and background across all pages."
+        },
+        {
+          "path": "frontend/public/assets/generated/cricket-banner.dim_1200x300.png",
+          "operation": "create",
+          "description": "Wire generated cricket stadium atmosphere banner image into the application. Reference this image in Layout component header or MatchListPage hero section using the workspace file path frontend/public/assets/generated/cricket-banner.dim_1200x300.png."
+        },
+        {
+          "path": "frontend/public/assets/generated/cricket-gods-logo.dim_256x256.png",
+          "operation": "create",
+          "description": "Wire generated Cricket Gods logo image into the application. Reference this image in Layout component header as the main branding logo using the workspace file path frontend/public/assets/generated/cricket-gods-logo.dim_256x256.png."
+        }
+      ]
+    }
+  ]
+}

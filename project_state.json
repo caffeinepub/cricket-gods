@@ -1,0 +1,189 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "Full cricket scoreboard application named 'Cricket Gods' with backend persistence, multi-match support, and all cricket formats (T20, ODI, Test with up to 4 innings).",
+  "architectural_notes": [
+    "Backend persistence via Internet Computer canister",
+    "Multi-match support with a match list view",
+    "Support all cricket formats: T20, ODI, Test (Tests allow up to 4 innings)"
+  ],
+  "known_issues": [],
+  "isFixRequest": false,
+  "imageRequirements": "## Required Images\n- Cricket stadium atmosphere banner with dark sky, floodlights, and green pitch — wide landscape format (cricket-banner.dim_1200x300.png)\n- Cricket Gods logo mark — golden cricket ball with laurel wings on dark background (cricket-gods-logo.dim_256x256.png)",
+  "existing_features": [
+    {
+      "id": "feature-build-a-multi-match-management-screen-a-home-page-listing-all-saved-matches-with-their-format-badge-teams-current-status-upcoming-live-completed-and-score-summary-include-a-new-match-button-and-a-load-demo-match-button-for-first-time-users",
+      "title": "Build a multi-match management screen: a home page listing all saved matches with their format badge, teams, current status (upcoming/live/completed), and score summary. Include a 'New Match' button and a 'Load Demo Match' button for first-time users.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-a-match-creation-form-allowing-the-user-to-enter-team-1-name-team-2-name-match-format-t20-odi-test-number-of-overs-auto-set-to-20-for-t20-50-for-odi-unlimited-for-test-and-an-optional-match-title-on-submit-call-creatematch-on-the-backend-and-navigate-to-the-new-match",
+      "title": "Build a match creation form allowing the user to enter: Team 1 name, Team 2 name, match format (T20 / ODI / Test), number of overs (auto-set to 20 for T20, 50 for ODI, unlimited for Test), and an optional match title. On submit, call createMatch on the backend and navigate to the new match.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-a-live-scoring-interface-for-an-active-innings-display-current-score-runs-wickets-overs-prominently-show-striker-and-non-striker-batsman-with-live-stats-show-current-bowler-with-live-over-details-and-provide-ball-input-controls-buttons-for-0-1-2-3-4-6-wide-no-ball-and-wicket-wicket-should-prompt-a-sub-form-to-select-dismissal-type-and-select-the-next-batsman-from-the-team-roster",
+      "title": "Build a live scoring interface for an active innings: display current score (runs/wickets/overs) prominently, show striker and non-striker batsman with live stats, show current bowler with live over details, and provide ball input controls: buttons for 0, 1, 2, 3, 4, 6, Wide, No Ball, and Wicket. Wicket should prompt a sub-form to select dismissal type and select the next batsman from the team roster.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-a-scoreboard-display-panel-showing-current-innings-total-runs-wickets-overs-bowled-current-run-rate-and-for-the-second-innings-onward-target-runs-needed-and-required-run-rate",
+      "title": "Build a scoreboard display panel showing: current innings total (runs/wickets), overs bowled, current run rate, and (for the second innings onward) target, runs needed, and required run rate.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-a-batting-scorecard-tab-section-showing-a-table-of-all-batsmen-in-the-current-innings-with-columns-name-dismissal-info-runs-balls-faced-4s-6s-and-strike-rate-show-not-out-batsmen-highlighted",
+      "title": "Build a batting scorecard tab/section showing a table of all batsmen in the current innings with columns: name, dismissal info, runs, balls faced, 4s, 6s, and strike rate. Show not-out batsmen highlighted.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-a-bowling-scorecard-tab-section-showing-a-table-of-all-bowlers-who-have-bowled-in-the-current-innings-with-columns-name-overs-maidens-runs-wickets-and-economy-rate",
+      "title": "Build a bowling scorecard tab/section showing a table of all bowlers who have bowled in the current innings with columns: name, overs, maidens, runs, wickets, and economy rate.",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-a-ball-by-ball-commentary-log-section-showing-each-delivery-grouped-by-over-each-entry-should-show-the-over-ball-number-runs-scored-any-extra-type-wicket-flag-and-a-short-commentary-description",
+      "title": "Build a ball-by-ball commentary log section showing each delivery grouped by over. Each entry should show the over-ball number, runs scored, any extra type, wicket flag, and a short commentary description.",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-a-fall-of-wickets-tracker-section-showing-wicket-number-total-score-at-the-time-of-the-wicket-over-at-which-it-fell-and-the-name-of-the-dismissed-batsman",
+      "title": "Build a fall of wickets tracker section showing: wicket number, total score at the time of the wicket, over at which it fell, and the name of the dismissed batsman.",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-a-match-result-screen-shown-when-a-match-is-concluded-display-the-winning-team-margin-of-victory-e-g-team-a-won-by-34-runs-or-team-b-won-by-4-wickets-player-of-the-match-placeholder-and-a-back-to-matches-button",
+      "title": "Build a match result screen shown when a match is concluded: display the winning team, margin of victory (e.g., 'Team A won by 34 runs' or 'Team B won by 4 wickets'), player of the match placeholder, and a 'Back to Matches' button.",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-a-bold-vibrant-cricket-themed-visual-design-consistently-across-the-entire-application-dark-stadium-inspired-background-with-bright-accent-colors-greens-and-gold-cricket-inspired-typography-card-based-layout-for-scorecards-clear-visual-hierarchy-separating-live-score-from-detail-tabs-and-responsive-layout-for-both-desktop-and-mobile-viewports",
+      "title": "Apply a bold, vibrant cricket-themed visual design consistently across the entire application: dark stadium-inspired background with bright accent colors (greens and gold), cricket-inspired typography, card-based layout for scorecards, clear visual hierarchy separating live score from detail tabs, and responsive layout for both desktop and mobile viewports.",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Match management: create a match with two teams, set overs limit, support T20/ODI/Test formats",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Live scoring: add runs per ball (0-6, wide, no-ball, wicket), update score in real-time",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Innings management: track current innings, switch innings when all out or overs complete, up to 4 innings for Tests",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Scoreboard display: current score (runs/wickets), overs bowled, run rate, required run rate (2nd innings)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Batting scorecard: each batsman's runs, balls faced, 4s, 6s, strike rate",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Bowling scorecard: each bowler's overs, maidens, runs conceded, wickets, economy",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Ball-by-ball commentary log with over breakdown",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Fall of wickets tracker",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-9",
+      "summary": "Match result calculation and display",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-10",
+      "summary": "Multi-match support: list of matches, switch between them",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-11",
+      "summary": "Backend persistence on Internet Computer canister so scores persist across sessions",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-12",
+      "summary": "Sample/demo match data for first-time users",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-13",
+      "summary": "Design and implement the backend data model in a single Motoko actor to support: matches (id, title, format T20/ODI/Test, teams, overs limit, status, createdAt), innings (match id, innings number, batting team, bowling team, total runs, wickets, overs bowled, extras breakdown), batting entries (batsman name, runs, balls faced, 4s, 6s, dismissal info, not-out flag), bowling entries (bowler name, overs, maidens, runs conceded, wickets), ball-by-ball delivery records (over number, ball number, runs, extras type, wicket flag, commentary text), fall of wickets (wicket number, score at fall, over at fall, batsman name), and match result (winner, margin, result type).",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-14",
+      "summary": "Implement backend CRUD and query functions: createMatch (teams, format, overs limit), listMatches, getMatch (full detail including innings and scorecards), startInnings, addDelivery (ball-by-ball input: runs 0–6, wide, no-ball, wicket + dismissed batsman), addBatsman, addBowler, switchInnings, concludeMatch (auto-calculate result), and getSampleDemoMatch.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Cricket Gods",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

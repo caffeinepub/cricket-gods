@@ -1,0 +1,3 @@
+{
+  "frontend/src/pages/MatchResultPage.tsx": "Match result page that displays the final result, innings score summary, player of the match placeholder, and per-innings batting/bowling scorecards. Handles both real matches (fetched by ID) and the demo match (id=0) with a special static view."
+}

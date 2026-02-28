@@ -1,0 +1,115 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-28T11:47:35.042Z",
+  "summary": "The diff implements a comprehensive cricket scoreboard application with a Motoko backend and React frontend. Most requirements are addressed, but several specific acceptance criteria have gaps or are only partially implemented. The backend uses a single actor but does not use stable variables for persistence. Several backend functions specified in REQ-2 appear missing or incomplete in the truncated diff.",
+  "missing_requirements": [
+    {
+      "id": "REQ-1",
+      "requirement": "Stable variables must be used so data persists across canister upgrades.",
+      "reason": "The backend/main.mo diff shows 'var nextMatchId', 'var nextInningsId', and 'let matches = Map.empty<Nat, Match>()' — none of these use the 'stable' keyword. Without stable variables, data will be lost on canister upgrades.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-1",
+      "requirement": "Fall of wickets data type (wicket number, score at fall, over at fall, batsman name) must be part of the backend data model as a dedicated field.",
+      "reason": "The Innings type in the backend does not include a dedicated fallOfWickets field. The frontend FallOfWickets component derives this data client-side from deliveries, rather than storing it in the backend model as specified.",
+      "evidence": [
+        "backend/main.mo",
+        "frontend/src/components/FallOfWickets.tsx"
+      ]
+    },
+    {
+      "id": "REQ-1",
+      "requirement": "Match result must be stored as a structured record with winner, margin, and result type as separate fields.",
+      "reason": "The Match type only has 'result: ?Text' — a plain text field — rather than a structured result record with winner, margin, and result type as separate fields.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "requirement": "switchInnings function must be implemented in the backend.",
+      "reason": "The diff does not show a switchInnings function in the backend. The visible backend only shows createMatch, listMatches, getMatch, startInnings, addBattingEntry, and partial content. No switchInnings is visible.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "requirement": "concludeMatch function must auto-calculate and store the result (winner by runs, wickets, draw, or tie).",
+      "reason": "No concludeMatch function implementation is visible in the backend diff. The frontend hooks reference it but the backend implementation is not shown.",
+      "evidence": [
+        "backend/main.mo",
+        "frontend/src/hooks/useQueries.ts"
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "requirement": "getSampleDemoMatch must return a pre-populated match with at least one completed innings of demo data.",
+      "reason": "No getSampleDemoMatch function implementation is visible in the backend diff. While useQueries.ts references it, the backend implementation is absent from the shown code.",
+      "evidence": [
+        "backend/main.mo",
+        "frontend/src/hooks/useQueries.ts"
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "requirement": "Wicket delivery must record fall of wicket with score and over in the backend data.",
+      "reason": "There is no fallOfWickets array in the Innings type, so wicket deliveries cannot persistently record fall-of-wicket data in the backend as required.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "NewBowlerDialog component prompting for a new bowler at the start of each over.",
+      "reason": "The spec does not mention a per-over bowler selection dialog. The spec only mentions addBowler as a backend function and showing the current bowler. A modal dialog triggered per over was not requested.",
+      "evidence": [
+        "frontend/src/components/NewBowlerDialog.tsx"
+      ]
+    },
+    {
+      "description": "StartInningsDialog prompting for two opening batsmen and an opening bowler together before each innings.",
+      "reason": "The spec mentions addBatsman and addBowler backend functions and prompting for the next batsman after a wicket, but does not specify a combined opener-and-bowler dialog at innings start as a UI requirement.",
+      "evidence": [
+        "frontend/src/components/StartInningsDialog.tsx"
+      ]
+    }
+  ],
+  "confidence": 0.62,
+  "changed_files": [
+    "all_files_summary.json",
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
+    "frontend/src/components/BallInputControls.tsx",
+    "frontend/src/components/BattingScorecard.tsx",
+    "frontend/src/components/BowlingScorecard.tsx",
+    "frontend/src/components/CommentaryLog.tsx",
+    "frontend/src/components/FallOfWickets.tsx",
+    "frontend/src/components/Layout.tsx",
+    "frontend/src/components/LiveScorePanel.tsx",
+    "frontend/src/components/MatchCard.tsx",
+    "frontend/src/components/NewBowlerDialog.tsx",
+    "frontend/src/components/StartInningsDialog.tsx",
+    "frontend/src/components/WicketDialog.tsx",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/index.css",
+    "frontend/src/lib/cricket.ts",
+    "frontend/src/main.tsx",
+    "frontend/src/pages/CreateMatchPage.tsx",
+    "frontend/src/pages/MatchDetailPage.tsx",
+    "frontend/src/pages/MatchListPage.tsx",
+    "frontend/src/pages/MatchResultPage.tsx",
+    "frontend/tailwind.config.js",
+    "project_state.json"
+  ]
+}

@@ -1,0 +1,198 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-build-a-multi-match-management-screen-a-home-page-listing-all-saved-matches-with-their-format-badge-teams-current-status-upcoming-live-completed-and-score-summary-include-a-new-match-button-and-a-load-demo-match-button-for-first-time-users",
+      "featureTitle": "Build a multi-match management screen: a home page listing all saved matches with their format badge, teams, current status (upcoming/live/completed), and score summary. Include a 'New Match' button and a 'Load Demo Match' button for first-time users.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/MatchCard.tsx",
+        "frontend/src/pages/MatchListPage.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-build-a-match-creation-form-allowing-the-user-to-enter-team-1-name-team-2-name-match-format-t20-odi-test-number-of-overs-auto-set-to-20-for-t20-50-for-odi-unlimited-for-test-and-an-optional-match-title-on-submit-call-creatematch-on-the-backend-and-navigate-to-the-new-match",
+      "featureTitle": "Build a match creation form allowing the user to enter: Team 1 name, Team 2 name, match format (T20 / ODI / Test), number of overs (auto-set to 20 for T20, 50 for ODI, unlimited for Test), and an optional match title. On submit, call createMatch on the backend and navigate to the new match.",
+      "files": [
+        "frontend/src/pages/CreateMatchPage.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-build-a-live-scoring-interface-for-an-active-innings-display-current-score-runs-wickets-overs-prominently-show-striker-and-non-striker-batsman-with-live-stats-show-current-bowler-with-live-over-details-and-provide-ball-input-controls-buttons-for-0-1-2-3-4-6-wide-no-ball-and-wicket-wicket-should-prompt-a-sub-form-to-select-dismissal-type-and-select-the-next-batsman-from-the-team-roster",
+      "featureTitle": "Build a live scoring interface for an active innings: display current score (runs/wickets/overs) prominently, show striker and non-striker batsman with live stats, show current bowler with live over details, and provide ball input controls: buttons for 0, 1, 2, 3, 4, 6, Wide, No Ball, and Wicket. Wicket should prompt a sub-form to select dismissal type and select the next batsman from the team roster.",
+      "files": [
+        "frontend/src/components/BallInputControls.tsx",
+        "frontend/src/components/LiveScorePanel.tsx",
+        "frontend/src/components/WicketDialog.tsx",
+        "frontend/src/pages/MatchDetailPage.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-build-a-scoreboard-display-panel-showing-current-innings-total-runs-wickets-overs-bowled-current-run-rate-and-for-the-second-innings-onward-target-runs-needed-and-required-run-rate",
+      "featureTitle": "Build a scoreboard display panel showing: current innings total (runs/wickets), overs bowled, current run rate, and (for the second innings onward) target, runs needed, and required run rate.",
+      "files": [
+        "frontend/src/components/LiveScorePanel.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-6"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-build-a-batting-scorecard-tab-section-showing-a-table-of-all-batsmen-in-the-current-innings-with-columns-name-dismissal-info-runs-balls-faced-4s-6s-and-strike-rate-show-not-out-batsmen-highlighted",
+      "featureTitle": "Build a batting scorecard tab/section showing a table of all batsmen in the current innings with columns: name, dismissal info, runs, balls faced, 4s, 6s, and strike rate. Show not-out batsmen highlighted.",
+      "files": [
+        "frontend/src/components/BattingScorecard.tsx",
+        "frontend/src/pages/MatchDetailPage.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-build-a-bowling-scorecard-tab-section-showing-a-table-of-all-bowlers-who-have-bowled-in-the-current-innings-with-columns-name-overs-maidens-runs-wickets-and-economy-rate",
+      "featureTitle": "Build a bowling scorecard tab/section showing a table of all bowlers who have bowled in the current innings with columns: name, overs, maidens, runs, wickets, and economy rate.",
+      "files": [
+        "frontend/src/components/BowlingScorecard.tsx",
+        "frontend/src/pages/MatchDetailPage.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-8"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-build-a-ball-by-ball-commentary-log-section-showing-each-delivery-grouped-by-over-each-entry-should-show-the-over-ball-number-runs-scored-any-extra-type-wicket-flag-and-a-short-commentary-description",
+      "featureTitle": "Build a ball-by-ball commentary log section showing each delivery grouped by over. Each entry should show the over-ball number, runs scored, any extra type, wicket flag, and a short commentary description.",
+      "files": [
+        "frontend/src/components/CommentaryLog.tsx",
+        "frontend/src/pages/MatchDetailPage.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-9"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-build-a-fall-of-wickets-tracker-section-showing-wicket-number-total-score-at-the-time-of-the-wicket-over-at-which-it-fell-and-the-name-of-the-dismissed-batsman",
+      "featureTitle": "Build a fall of wickets tracker section showing: wicket number, total score at the time of the wicket, over at which it fell, and the name of the dismissed batsman.",
+      "files": [
+        "frontend/src/components/FallOfWickets.tsx",
+        "frontend/src/pages/MatchDetailPage.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-10"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-build-a-match-result-screen-shown-when-a-match-is-concluded-display-the-winning-team-margin-of-victory-e-g-team-a-won-by-34-runs-or-team-b-won-by-4-wickets-player-of-the-match-placeholder-and-a-back-to-matches-button",
+      "featureTitle": "Build a match result screen shown when a match is concluded: display the winning team, margin of victory (e.g., 'Team A won by 34 runs' or 'Team B won by 4 wickets'), player of the match placeholder, and a 'Back to Matches' button.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/pages/MatchResultPage.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-11"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-apply-a-bold-vibrant-cricket-themed-visual-design-consistently-across-the-entire-application-dark-stadium-inspired-background-with-bright-accent-colors-greens-and-gold-cricket-inspired-typography-card-based-layout-for-scorecards-clear-visual-hierarchy-separating-live-score-from-detail-tabs-and-responsive-layout-for-both-desktop-and-mobile-viewports",
+      "featureTitle": "Apply a bold, vibrant cricket-themed visual design consistently across the entire application: dark stadium-inspired background with bright accent colors (greens and gold), cricket-inspired typography, card-based layout for scorecards, clear visual hierarchy separating live score from detail tabs, and responsive layout for both desktop and mobile viewports.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/Layout.tsx",
+        "frontend/src/index.css",
+        "frontend/tailwind.config.js"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-12"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

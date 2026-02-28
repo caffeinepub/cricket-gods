@@ -1,0 +1,225 @@
+{
+  "kind": "build_request",
+  "title": "Cricket Gods – Full Cricket Scoreboard Application",
+  "projectName": "Cricket Gods",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Design and implement the backend data model in a single Motoko actor to support: matches (id, title, format T20/ODI/Test, teams, overs limit, status, createdAt), innings (match id, innings number, batting team, bowling team, total runs, wickets, overs bowled, extras breakdown), batting entries (batsman name, runs, balls faced, 4s, 6s, dismissal info, not-out flag), bowling entries (bowler name, overs, maidens, runs conceded, wickets), ball-by-ball delivery records (over number, ball number, runs, extras type, wicket flag, commentary text), fall of wickets (wicket number, score at fall, over at fall, batsman name), and match result (winner, margin, result type).",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-3",
+          "msg-5"
+        ]
+      },
+      "acceptanceCriteria": [
+        "All data types compile without errors in Motoko.",
+        "Stable variables are used so data persists across canister upgrades.",
+        "Each match is uniquely identifiable by an auto-incremented ID.",
+        "Supports up to 4 innings per match (required for Test format)."
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Implement backend CRUD and query functions: createMatch (teams, format, overs limit), listMatches, getMatch (full detail including innings and scorecards), startInnings, addDelivery (ball-by-ball input: runs 0–6, wide, no-ball, wicket + dismissed batsman), addBatsman, addBowler, switchInnings, concludeMatch (auto-calculate result), and getSampleDemoMatch.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-3",
+          "msg-5"
+        ]
+      },
+      "acceptanceCriteria": [
+        "addDelivery correctly updates runs, balls, overs, extras, and maiden tracking.",
+        "Wicket delivery records fall of wicket with score and over.",
+        "switchInnings is triggered when all wickets fall or overs are exhausted.",
+        "For Test matches, up to 4 innings can be created across both teams.",
+        "concludeMatch calculates winner by runs (batting second exceeds target) or by wickets, draws, or ties.",
+        "getSampleDemoMatch returns a pre-populated match with at least one completed innings of demo data."
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Build a multi-match management screen: a home page listing all saved matches with their format badge, teams, current status (upcoming/live/completed), and score summary. Include a 'New Match' button and a 'Load Demo Match' button for first-time users.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-3",
+          "msg-5"
+        ]
+      },
+      "acceptanceCriteria": [
+        "All matches are fetched from the backend and displayed in a list/card grid.",
+        "Each card shows both team names, format, status badge, and current score if live.",
+        "Clicking a match navigates to the match detail/scoring view.",
+        "Load Demo Match calls getSampleDemoMatch and navigates directly to that match.",
+        "New Match opens a creation form."
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Build a match creation form allowing the user to enter: Team 1 name, Team 2 name, match format (T20 / ODI / Test), number of overs (auto-set to 20 for T20, 50 for ODI, unlimited for Test), and an optional match title. On submit, call createMatch on the backend and navigate to the new match.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-3",
+          "msg-5"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Format selector auto-fills overs limit; Test format disables the overs field.",
+        "Validation prevents submission with empty team names.",
+        "On success, user is taken to the match scoring view."
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Build a live scoring interface for an active innings: display current score (runs/wickets/overs) prominently, show striker and non-striker batsman with live stats, show current bowler with live over details, and provide ball input controls: buttons for 0, 1, 2, 3, 4, 6, Wide, No Ball, and Wicket. Wicket should prompt a sub-form to select dismissal type and select the next batsman from the team roster.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-3",
+          "msg-5"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Each ball input calls addDelivery on the backend.",
+        "Score, overs, and run rate update immediately after each delivery.",
+        "Wide and No Ball add 1 run to extras and do not count as a legal delivery.",
+        "After a wicket, user is prompted to enter the next batsman before continuing.",
+        "When innings ends (all out or overs complete), a prompt appears to start the next innings or view final result."
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "text": "Build a scoreboard display panel showing: current innings total (runs/wickets), overs bowled, current run rate, and (for the second innings onward) target, runs needed, and required run rate.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-3"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Run rate = total runs / overs bowled, displayed to 2 decimal places.",
+        "Required run rate = runs needed / overs remaining, shown only in 2nd innings and beyond.",
+        "Target is clearly displayed when chasing.",
+        "All values update in real-time after each delivery."
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "text": "Build a batting scorecard tab/section showing a table of all batsmen in the current innings with columns: name, dismissal info, runs, balls faced, 4s, 6s, and strike rate. Show not-out batsmen highlighted.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-3"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Strike rate = (runs / balls) × 100, shown to 2 decimal places.",
+        "Currently batting players are marked with an asterisk or highlight.",
+        "Dismissed players show dismissal type (caught, bowled, lbw, run out, etc.).",
+        "Extras row and total row are shown at the bottom."
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "text": "Build a bowling scorecard tab/section showing a table of all bowlers who have bowled in the current innings with columns: name, overs, maidens, runs, wickets, and economy rate.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-3"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Economy = runs conceded / overs bowled, shown to 2 decimal places.",
+        "The current bowler is highlighted.",
+        "Overs are displayed in cricket notation (e.g., 3.4 = 3 overs 4 balls)."
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "text": "Build a ball-by-ball commentary log section showing each delivery grouped by over. Each entry should show the over-ball number, runs scored, any extra type, wicket flag, and a short commentary description.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-3"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Deliveries are grouped under collapsible over headers (e.g., 'Over 3').",
+        "The most recent over is expanded by default.",
+        "Wicket deliveries are highlighted in a distinct color.",
+        "Wide and no-ball deliveries are clearly labeled."
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "text": "Build a fall of wickets tracker section showing: wicket number, total score at the time of the wicket, over at which it fell, and the name of the dismissed batsman.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-3"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Displayed in chronological order.",
+        "Shows all wickets for the current innings.",
+        "Updates in real-time as wickets fall."
+      ]
+    },
+    {
+      "id": "REQ-11",
+      "text": "Build a match result screen shown when a match is concluded: display the winning team, margin of victory (e.g., 'Team A won by 34 runs' or 'Team B won by 4 wickets'), player of the match placeholder, and a 'Back to Matches' button.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-3"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Result is fetched from the backend after concludeMatch is called.",
+        "Handles draw and tie results for Test matches.",
+        "Match is marked as 'Completed' in the match list after the result is set."
+      ]
+    },
+    {
+      "id": "REQ-12",
+      "text": "Apply a bold, vibrant cricket-themed visual design consistently across the entire application: dark stadium-inspired background with bright accent colors (greens and gold), cricket-inspired typography, card-based layout for scorecards, clear visual hierarchy separating live score from detail tabs, and responsive layout for both desktop and mobile viewports.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ]
+      },
+      "acceptanceCriteria": [
+        "A consistent color palette (dark background, green and gold accents) is applied globally via Tailwind.",
+        "All scorecard tables are readable with sufficient contrast.",
+        "Navigation between match list, live scoring, batting scorecard, bowling scorecard, commentary, and fall of wickets is intuitive (tabs or sidebar).",
+        "Layout is usable on mobile screen widths (min 375px)."
+      ]
+    }
+  ],
+  "constraints": [
+    "All Motoko logic must live in a single actor in backend/main.mo.",
+    "Do not edit any files under frontend/src/hooks/ or frontend/src/components/ui.",
+    "Use stable variables in Motoko to ensure data persists across canister upgrades.",
+    "Do not use external databases or third-party APIs."
+  ],
+  "nonGoals": [
+    "Real-time WebSocket push updates (polling or manual refresh is acceptable).",
+    "User authentication or Internet Identity login.",
+    "Video streaming or live match feeds from external sources.",
+    "Player profile management beyond name entry during match setup.",
+    "Tournament bracket or league management."
+  ],
+  "imageRequirements": {
+    "required": [
+      "Cricket stadium atmosphere banner with dark sky, floodlights, and green pitch — wide landscape format (cricket-banner.dim_1200x300.png)",
+      "Cricket Gods logo mark — golden cricket ball with laurel wings on dark background (cricket-gods-logo.dim_256x256.png)"
+    ],
+    "edits": []
+  }
+}
